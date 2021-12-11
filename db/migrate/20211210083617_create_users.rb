@@ -3,7 +3,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
     create_table :users, id: :uuid do |t|
       t.string :name
       t.string :character_image
-      t.references :room, foreign_key: true, type: :uuid
+      t.integer :role
       t.timestamps
     end
   end

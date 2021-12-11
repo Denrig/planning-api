@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_10_083617) do
+ActiveRecord::Schema.define(version: 2021_12_11_172640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "room_attendances", force: :cascade do |t|
+    t.uuid "room_id"
+    t.uuid "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_room_attendances_on_room_id"
+    t.index ["user_id"], name: "index_room_attendances_on_user_id"
+  end
 
   create_table "rooms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
@@ -29,11 +38,11 @@ ActiveRecord::Schema.define(version: 2021_12_10_083617) do
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "character_image"
-    t.uuid "room_id"
+    t.integer "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["room_id"], name: "index_users_on_room_id"
   end
 
-  add_foreign_key "users", "rooms"
+  add_foreign_key "room_attendances", "rooms"
+  add_foreign_key "room_attendances", "users"
 end
