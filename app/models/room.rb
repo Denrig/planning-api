@@ -9,12 +9,7 @@ class Room < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
-  after_create :create_admin
-
-  private
-
-    def create_admin
-      admin = User.new.save(validate: false)
-      room_attendances.create!(user: admin, role: :admin)
-    end
+  def create_admin!(user_id)
+    room_attendances.create!(user_id: user_id, role: :admin)
+  end
 end

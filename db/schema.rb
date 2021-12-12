@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 2021_12_11_172640) do
   enable_extension "uuid-ossp"
 
   create_table "room_attendances", force: :cascade do |t|
+    t.integer "role"
     t.uuid "room_id"
     t.uuid "user_id"
-    t.integer "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_room_attendances_on_room_id"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_172640) do
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "character_image"
+    t.integer "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::UsersController < Api::V1::BaseController
-  def index
+  def show
     render json: user
   end
 
@@ -10,16 +10,16 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def update
-    render json: user.update!(user_params.exept(:role))
+    render json: user.update!(user_params)
   end
 
   private
 
     def user_params
-      params.require(:user).permit(:name, :character_image, :role)
+      params.require(:user).permit(:name, :character_image)
     end
 
     def user
-      @user ||= User.find(request.headers[:userId]) if request.headers[:userId]
+      @user ||= User.find(params[:id])
     end
 end

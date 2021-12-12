@@ -3,8 +3,9 @@
 class Api::V1::RoomsController < Api::V1::BaseController
   def create
     room = Room.create(room_params)
+    room.create_admin!(params[:user_id])
 
-    render json: room
+    render json: room, include: 'room_attendances.user'
   end
 
   private
