@@ -8,6 +8,10 @@ class Api::V1::RoomsController < Api::V1::BaseController
     render json: room, include: 'room_attendances.user'
   end
 
+  def show
+    render json: Room.find_by!(code: params[:id])
+  end
+
   private
 
     def room_params

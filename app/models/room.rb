@@ -9,7 +9,13 @@ class Room < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
+  before_create :set_code
+
   def create_admin!(user_id)
     room_attendances.create!(user_id: user_id, role: :admin)
+  end
+
+  def set_code
+    self.code = SecureRandom.hex(6)
   end
 end
