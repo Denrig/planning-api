@@ -9,7 +9,7 @@ class Api::V1::RoomsController < Api::V1::BaseController
   end
 
   def show
-    render json: Room.find_by!(code: params[:id])
+    render json: Room.find(params[:id])
   end
 
   private

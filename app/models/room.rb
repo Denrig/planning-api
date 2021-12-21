@@ -4,6 +4,8 @@ class Room < ApplicationRecord
   has_many :room_attendances, dependent: :destroy
   has_many :users, through: :room_attendances
 
+  has_many :tasks, dependent: :destroy
+
   validates :name, presence: true
   validates :players_count, presence: true, numericality: { greater_than: 0 }
 
