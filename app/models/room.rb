@@ -20,4 +20,8 @@ class Room < ApplicationRecord
   def set_code
     self.code = SecureRandom.hex(6)
   end
+
+  def broadcast(data)
+    RoomChannel.broadcast_to(self, data)
+  end
 end
