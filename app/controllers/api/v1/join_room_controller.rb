@@ -8,6 +8,8 @@ class Api::V1::JoinRoomController < Api::V1::BaseController
                       else
                         RoomAttendance.create!(room_attendance_params)
                       end
+    room_attendance.room.broadcast({ type: :PLAYER_JOINED,
+                                     user: RoomAttendanceSerializer.new(room_attendance).serializable_hash })
 
     render json: room_attendance
   end
