@@ -5,4 +5,10 @@ class Task < ApplicationRecord
   has_many :votes, dependent: :destroy
 
   validates :text, presence: true
+
+  def voting_results
+    [0.5, 1, 3, 5, 8, 13, 21, '?'].map do |points|
+      [points, votes.where(vote: points).count]
+    end.to_h
+  end
 end

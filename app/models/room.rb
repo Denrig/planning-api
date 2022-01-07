@@ -5,7 +5,7 @@ class Room < ApplicationRecord
   has_many :users, through: :room_attendances
 
   has_many :players, lambda {
-                       where(room_attendances: { role: :player })
+                       where(room_attendances: { role: :player }).distinct
                      }, through: :room_attendances, class_name: 'User', source: :user
 
   has_many :tasks, dependent: :destroy

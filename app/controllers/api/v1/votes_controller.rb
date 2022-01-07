@@ -33,12 +33,14 @@ class Api::V1::VotesController < Api::V1::BaseController
   end
 
   def update
-    room = Room.find(params[:id])
+    task = Task.find(params[:id])
+    data = {
+      type: :DISPLAY_VOTES_CHANGED,
+      value: params[:value]
+    }
+    data[:results] = task.voting_results if params[:value]
 
-    room.broadcast({
-                     type: :DISPLAY_VOTES_CHANGED,
-                     value: params[:value]
-                   })
+    task.room.broadcast(data)
   end
 
   private
