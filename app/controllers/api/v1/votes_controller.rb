@@ -32,6 +32,15 @@ class Api::V1::VotesController < Api::V1::BaseController
     head :ok
   end
 
+  def update
+    room = Room.find(params[:id])
+
+    room.broadcast({
+                     type: :DISPLAY_VOTES_CHANGED,
+                     value: params[:value]
+                   })
+  end
+
   private
 
     def vote_params

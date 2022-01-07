@@ -10,17 +10,21 @@ class Api::V1::JoinRoomController < Api::V1::BaseController
       room_attendance = RoomAttendance.create!(room_attendance_params)
     end
 
-    room_attendance.room.broadcast({ type: :PLAYER_JOINED,
-                                     user: RoomAttendanceSerializer.new(room_attendance).serializable_hash })
+    notify_player_joined(room_attendance) if room_attendance.player?
 
     render json: room_attendance
   end
 
   def show
-    render json: Room.find_by!(code: params[:id])
+    render json: Room.find_by!(code: params[:id].downcase)
   end
 
   private
+
+    def notify_player_joined(room_attendance)
+      room_attendance.room.broadcast({ type: :PLAYER_JOINED,
+                                       user: UserSerializer.new(room_attendance.user).serializable_hash })
+    end
 
     def room_attendance_params
       params.permit(:user_id, :room_id, :role)

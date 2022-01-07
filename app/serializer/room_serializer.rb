@@ -3,6 +3,6 @@
 class RoomSerializer < ActiveModel::Serializer
   attributes :id, :name, :players_count, :code
 
-  has_many :room_attendances
+  has_many :players
   has_many :tasks
 end

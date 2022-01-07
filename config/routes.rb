@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       end
       resources :users, only: %i[show update create]
       resources :join_room, only: %i[create show]
-      resources :votes, only: :create do
+      resources :votes, only: %i[create update] do
         delete '/', action: :destroy, on: :collection
       end
     end
