@@ -7,7 +7,8 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def create
     task = room.tasks.create(task_params)
-    SocketTypesHandler.call(room: room, content: { type: :TASK_ADDED, task: task })
+    room.broadcast({ type: :TASK_ADDED,
+                     task: TaskSerializer.new(task).serializable_hash })
 
     render json: task
   end

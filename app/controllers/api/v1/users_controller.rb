@@ -10,7 +10,9 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def update
-    render json: user.update!(user_params)
+    user.update!(user_params)
+
+    render json: user
   end
 
   private

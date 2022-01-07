@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_21_195416) do
+ActiveRecord::Schema.define(version: 2021_12_28_103556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -54,7 +54,19 @@ ActiveRecord::Schema.define(version: 2021_12_21_195416) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.uuid "user_id"
+    t.bigint "task_id"
+    t.string "vote"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["task_id"], name: "index_votes_on_task_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
   add_foreign_key "room_attendances", "rooms"
   add_foreign_key "room_attendances", "users"
   add_foreign_key "tasks", "rooms"
+  add_foreign_key "votes", "tasks"
+  add_foreign_key "votes", "users"
 end
