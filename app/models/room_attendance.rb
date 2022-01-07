@@ -8,7 +8,6 @@ class RoomAttendance < ApplicationRecord
 
   enum role: {
     player: 100,
-    spectator: 101,
-    admin: 102
+    spectator: 101
   }
 end
