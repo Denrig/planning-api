@@ -39,6 +39,7 @@ class Api::V1::VotesController < Api::V1::BaseController
       value: params[:value]
     }
     data[:results] = task.voting_results if params[:value]
+    task.votes.destroy_all unless params[:value]
 
     task.room.broadcast(data)
   end
