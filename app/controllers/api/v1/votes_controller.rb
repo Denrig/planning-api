@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class Api::V1::VotesController < Api::V1::BaseController
+  def index
+    votes = Vote.where(task_id: params[:task_id])
+
+    render json: votes
+  end
+
   def create
     vote = Vote.find_by(user_id: vote_params[:user_id], task_id: vote_params[:task_id])
 
