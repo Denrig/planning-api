@@ -13,10 +13,22 @@ class Api::V1::TasksController < Api::V1::BaseController
     render json: task
   end
 
+  def update
+    task = room.tasks.find(params[:id])
+    task.update!(task_params)
+
+    room.broadcast({
+                     type: :TASK_UPDATED,
+                     task: TaskSerializer.new(task).serializable_hash.except(:votes)
+                   })
+
+    head :ok
+  end
+
   private
 
     def task_params
-      params.permit(:text)
+      params.permit(:text, :result)
     end
 
     def room

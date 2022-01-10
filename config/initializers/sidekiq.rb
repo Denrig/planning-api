@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sidekiq/web'
 
 sidekiq_username = ENV.fetch('SIDEKIQ_WEB_USERNAME')

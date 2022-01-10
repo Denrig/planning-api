@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_28_103556) do
+ActiveRecord::Schema.define(version: 2022_01_10_133646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 2021_12_28_103556) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "text"
-    t.boolean "is_current", default: true
     t.uuid "room_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "result"
     t.index ["room_id"], name: "index_tasks_on_room_id"
   end
 
