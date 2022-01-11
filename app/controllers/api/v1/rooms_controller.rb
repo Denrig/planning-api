@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Api::V1::RoomsController < Api::V1::BaseController
+  def index
+    render json: paginate(Room.all)
+  end
+
   def create
     room = Room.create!(room_params)
 
