@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  default_scope { order(created_at: :desc) }
   belongs_to :room
   has_many :votes, dependent: :destroy
 
