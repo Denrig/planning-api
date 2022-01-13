@@ -8,9 +8,8 @@ class Api::V1::JoinRoomController < Api::V1::BaseController
       room_attendance.update!(room_attendance_params)
     else
       room_attendance = RoomAttendance.create!(room_attendance_params)
+      notify_player_joined(room_attendance) if room_attendance.player?
     end
-
-    notify_player_joined(room_attendance) if room_attendance.player?
 
     render json: room_attendance
   end
