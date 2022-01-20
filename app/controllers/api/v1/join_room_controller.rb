@@ -8,8 +8,9 @@ class Api::V1::JoinRoomController < Api::V1::BaseController
       room_attendance.update!(room_attendance_params)
     else
       room_attendance = RoomAttendance.create!(room_attendance_params)
-      notify_player_joined(room_attendance) if room_attendance.player?
     end
+
+    notify_players(room_attendance)
 
     render json: room_attendance
   end
@@ -20,9 +21,10 @@ class Api::V1::JoinRoomController < Api::V1::BaseController
 
   private
 
-    def notify_player_joined(room_attendance)
-      room_attendance.room.broadcast({ type: :PLAYER_JOINED,
-                                       user: UserSerializer.new(room_attendance.user).serializable_hash })
+    def notify_players(room_attendance, type = :PLAYER_JOINED)
+      room_attendance.room.broadcast({ type: type,
+                                       user: UserSerializer.new(room_attendance.user).serializable_hash,
+                                       role: room_attendance.role })
     end
 
     def room_attendance_params
