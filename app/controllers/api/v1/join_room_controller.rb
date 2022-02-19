@@ -15,6 +15,15 @@ class Api::V1::JoinRoomController < Api::V1::BaseController
     render json: room_attendance
   end
 
+  def destroy
+    room_attendance = RoomAttendance.find_by!(room_attendance_params.except(:role))
+    room_attendance.destroy!
+
+    notify_players(room_attendance, :PLAYER_LEFT)
+
+    render json: room_attendance
+  end
+
   def show
     render json: Room.find_by!(code: params[:id].downcase)
   end
