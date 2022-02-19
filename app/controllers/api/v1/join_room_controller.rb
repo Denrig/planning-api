@@ -16,12 +16,14 @@ class Api::V1::JoinRoomController < Api::V1::BaseController
   end
 
   def destroy
-    room_attendance = RoomAttendance.find_by!(room_attendance_params.except(:role))
-    room_attendance.destroy!
+    room_attendance = RoomAttendance.find_by(room_attendance_params.except(:role))
 
-    notify_players(room_attendance, :PLAYER_LEFT)
+    if room_attendance
+      room_attendance.destroy!
+      notify_players(room_attendance, :PLAYER_LEFT)
+    end
 
-    render json: room_attendance
+    head :ok
   end
 
   def show
