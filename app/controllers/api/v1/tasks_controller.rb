@@ -6,7 +6,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def create
-    task = room.tasks.create(task_params)
+    task = room.tasks.create(task_params.merge(is_current: true))
     room.broadcast({ type: :TASK_ADDED,
                      task: TaskSerializer.new(task).serializable_hash })
 
@@ -28,7 +28,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   private
 
     def task_params
-      params.permit(:text, :result)
+      params.permit(:text, :result, :is_current)
     end
 
     def room

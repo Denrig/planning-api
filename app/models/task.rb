@@ -7,9 +7,28 @@ class Task < ApplicationRecord
 
   validates :text, presence: true
 
+  before_save :update_other_tasks
+
   def voting_results
     [0.5, 1, 2, 3, 5, 8, 13, 21, '?'].map do |points|
       [points, votes.where(vote: points).count]
     end.to_h
   end
+
+  private
+
+    def update_other_tasks
+      return unless is_current
+
+      current_task = room.tasks.find_by(is_current: true)
+
+      return unless current_task
+
+      current_task.update(is_current: false)
+
+      room.broadcast({
+                       type: :TASK_UPDATED,
+                       task: TaskSerializer.new(current_task).serializable_hash.except(:votes)
+                     })
+    end
 end

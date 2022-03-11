@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_10_133646) do
+ActiveRecord::Schema.define(version: 2022_03_11_071129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2022_01_10_133646) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "result"
+    t.boolean "is_current", default: false, null: false
     t.index ["room_id"], name: "index_tasks_on_room_id"
   end
 
