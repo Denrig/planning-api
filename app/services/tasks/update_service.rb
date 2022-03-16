@@ -32,7 +32,7 @@ class Tasks::UpdateService < BaseService
 
     # rubocop:disable Naming/VariableNumber
     def update_jira_card
-      return if task.result == '?'
+      return if task.result == '?' || task.jira_id.nil?
 
       Jira::ApiService.update_card_information(task.jira_id,
                                                { fields: { customfield_10028: task.result.to_i } })
