@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Jira::TaskConvertionService < BaseService
   parameter :id
 
@@ -15,7 +17,11 @@ class Jira::TaskConvertionService < BaseService
         text: params['summary'],
         description: params['description'],
         status: params.dig('status', 'name'),
-        issue_type: params.dig('issuetype', 'name').downcase
+        issue_type: get_issue_type(params.dig('issuetype', 'name').downcase)
       }
+    end
+
+    def get_issue_type(value)
+      Task.issue_types.keys.include?(value) ? value : nil
     end
 end

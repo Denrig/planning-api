@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2022_03_16_093826) do
     t.text "description"
     t.string "status"
     t.integer "issue_type"
+    t.string "jira_id"
     t.index ["room_id"], name: "index_tasks_on_room_id"
   end
 

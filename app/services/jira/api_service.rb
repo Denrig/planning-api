@@ -15,5 +15,9 @@ class Jira::ApiService
 
       response.parsed_response['fields']
     end
+
+    def update_card_information(id, params)
+      put("/#{id}", headers: HEADERS, body: params.to_json)
+    end
   end
 end

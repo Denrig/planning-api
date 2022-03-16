@@ -7,8 +7,6 @@ class Task < ApplicationRecord
 
   validates :text, presence: true
 
-  before_save :update_other_tasks
-
   enum issue_type: {
     bug: 1,
     task: 2,

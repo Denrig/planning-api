@@ -6,22 +6,19 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def create
-    task = room.tasks.create(task_params.merge(is_current: true))
-
-    room.broadcast({ type: :TASK_ADDED,
-                     task: TaskSerializer.new(task).serializable_hash })
+    task = Tasks::CreationService.call(
+      params: task_params,
+      room: room
+    ).task
 
     render json: task
   end
 
   def update
-    task = room.tasks.find(params[:id])
-    task.update!(task_params)
-
-    room.broadcast({
-                     type: :TASK_UPDATED,
-                     task: TaskSerializer.new(task).serializable_hash.except(:votes)
-                   })
+    Tasks::UpdateService.call(
+      params: task_params,
+      task: room.tasks.find(params[:id])
+    ).task
 
     head :ok
   end
@@ -35,7 +32,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   private
 
     def task_params
-      params.permit(:text, :result, :is_current, :description, :status, :issue_type)
+      params.permit(:text, :result, :is_current, :description, :status, :issue_type, :jira_id)
     end
 
     def room
