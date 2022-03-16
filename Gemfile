@@ -11,6 +11,7 @@ gem 'active_model_serializers', '~> 0.10.2'
 gem 'rack-cors'
 gem 'sidekiq'
 gem 'will_paginate', '~> 3.3'
+gem 'httparty', '~> 0.20.0'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

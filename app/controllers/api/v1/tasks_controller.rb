@@ -7,6 +7,7 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def create
     task = room.tasks.create(task_params.merge(is_current: true))
+
     room.broadcast({ type: :TASK_ADDED,
                      task: TaskSerializer.new(task).serializable_hash })
 
@@ -23,6 +24,12 @@ class Api::V1::TasksController < Api::V1::BaseController
                    })
 
     head :ok
+  end
+
+  def show
+    task = Jira::TaskConvertionService.call(params[:id]).task
+
+    render json: task
   end
 
   private

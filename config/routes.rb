@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :rooms, only: %i[create show index] do
-        resources :tasks, only: %i[index create update]
+        resources :tasks, only: %i[index create update show]
       end
       resources :users, only: %i[show update create]
       resources :join_room, only: %i[create show] do
