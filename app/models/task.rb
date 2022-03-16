@@ -9,7 +9,7 @@ class Task < ApplicationRecord
 
   before_save :update_other_tasks
 
-  enum isssue_type: {
+  enum issue_type: {
     bug: 1,
     task: 2,
     story: 3

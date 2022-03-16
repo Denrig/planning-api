@@ -27,7 +27,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def show
-    task = Jira::TaskConvertionService.call(params[:id]).task
+    task = Jira::TaskConvertionService.call(id: params[:id]).task
 
     render json: task
   end
@@ -35,7 +35,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   private
 
     def task_params
-      params.permit(:text, :result, :is_current)
+      params.permit(:text, :result, :is_current, :description, :status, :issue_type)
     end
 
     def room

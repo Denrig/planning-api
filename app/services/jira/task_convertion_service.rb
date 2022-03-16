@@ -15,7 +15,7 @@ class Jira::TaskConvertionService < BaseService
         text: params['summary'],
         description: params['description'],
         status: params.dig('status', 'name'),
-        isssue_type: params.dig('issuetype', 'name').downcase
+        issue_type: params.dig('issuetype', 'name').downcase
       }
     end
 end
