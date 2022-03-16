@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_11_071129) do
+ActiveRecord::Schema.define(version: 2022_03_16_093826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 2022_03_11_071129) do
   enable_extension "uuid-ossp"
 
   create_table "room_attendances", force: :cascade do |t|
+    t.integer "role"
     t.uuid "room_id"
     t.uuid "user_id"
-    t.integer "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_room_attendances_on_room_id"
@@ -45,6 +45,10 @@ ActiveRecord::Schema.define(version: 2022_03_11_071129) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "result"
     t.boolean "is_current", default: false, null: false
+    t.text "description"
+    t.string "status"
+    t.integer "issue_type"
+    t.string "jira_id"
     t.index ["room_id"], name: "index_tasks_on_room_id"
   end
 

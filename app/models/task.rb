@@ -7,12 +7,16 @@ class Task < ApplicationRecord
 
   validates :text, presence: true
 
-  before_save :update_other_tasks
+  enum issue_type: {
+    bug: 1,
+    task: 2,
+    story: 3
+  }
 
   def voting_results
-    [0.5, 1, 2, 3, 5, 8, 13, 21, '?'].map do |points|
+    [0.5, 1, 2, 3, 5, 8, 13, 21, '?'].to_h do |points|
       [points, votes.where(vote: points).count]
-    end.to_h
+    end
   end
 
   private
