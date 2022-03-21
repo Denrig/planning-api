@@ -9,6 +9,7 @@ class Tasks::UpdateService < BaseService
 
       @is_current_changed = task.is_current_changed?
       @is_result_changed = task.result_changed?
+
       current_voting_task&.update!(is_current: false) if @is_current_changed
       update_jira_card if @is_result_changed
 

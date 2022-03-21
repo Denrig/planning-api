@@ -1,11 +1,29 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id          :bigint           not null, primary key
+#  text        :string
+#  room_id     :uuid
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  result      :string
+#  is_current  :boolean          default(FALSE), not null
+#  description :text
+#  status      :string
+#  issue_type  :integer
+#  jira_id     :string
+#
 class Task < ApplicationRecord
   default_scope { order(created_at: :desc) }
+
   belongs_to :room
   has_many :votes, dependent: :destroy
 
   validates :text, presence: true
+  validates :jira_id, uniqueness: true
 
   enum issue_type: {
     bug: 1,

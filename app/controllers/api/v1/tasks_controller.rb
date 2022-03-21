@@ -24,7 +24,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def show
-    task = Jira::TaskConvertionService.call(id: params[:id]).task
+    task = Jira::Tasks::ConvertionService.call(id: params[:id]).task
 
     render json: task
   end

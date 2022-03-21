@@ -18,6 +18,6 @@ class Api::V1::RoomsController < Api::V1::BaseController
   private
 
     def room_params
-      params.require(:room).permit(:name, :players_count, :is_active)
+      params.require(:room).permit(:name, :players_count, :is_active, :jira_key)
     end
 end

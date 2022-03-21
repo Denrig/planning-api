@@ -1,15 +1,6 @@
 # frozen_string_literal: true
 
-class Jira::TaskConvertionService < BaseService
-  parameter :id
-
-  attr_reader :task
-
-  def call
-    params = Jira::ApiService.get_card_information(id)
-    @task = Task.new(task_params(params))
-  end
-
+class Jira::Tasks::BaseService < BaseService
   private
 
     def task_params(params)

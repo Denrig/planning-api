@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: rooms
+#
+#  id            :uuid             not null, primary key
+#  name          :string
+#  players_count :integer
+#  active        :boolean          default(TRUE)
+#  is_private    :boolean          default(FALSE)
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  code          :string
+#  jira_key      :string
+#
 class Room < ApplicationRecord
   has_many :room_attendances, dependent: :destroy
   has_many :users, through: :room_attendances
@@ -11,6 +25,7 @@ class Room < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   validates :name, presence: true
+  validates :jira_key, uniqueness: true
 
   scope :active, -> { where(active: true) }
 
