@@ -35,8 +35,12 @@ class Tasks::UpdateService < BaseService
     def update_jira_card
       return if task.result == '?' || task.jira_id.nil?
 
-      Jira::ApiService.update_card_information(task.jira_id,
-                                               { fields: { customfield_10028: task.result.to_i } })
+      request = {
+        update: { labels: [{ remove: 'ForPlanning' }] },
+        fields: { customfield_10028: task.result.to_i }
+      }
+
+      Jira::ApiService.update_card_information(task.jira_id, request)
     end
     # rubocop:enable Naming/VariableNumber
 
