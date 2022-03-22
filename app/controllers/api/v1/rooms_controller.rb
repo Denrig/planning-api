@@ -12,10 +12,21 @@ class Api::V1::RoomsController < Api::V1::BaseController
   end
 
   def show
-    render json: Room.find(params[:id]), include: %w[players tasks]
+    render json: room, include: %w[players tasks]
+  end
+
+  def destroy
+    room.destroy!
+    room.broadcast({ type: :ROOM_DELETED })
+
+    head :ok
   end
 
   private
+
+    def room
+      @room ||= Room.find(params[:id])
+    end
 
     def room_params
       params.require(:room).permit(:name, :players_count, :is_active, :jira_key)

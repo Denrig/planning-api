@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :votes, only: %i[create update index] do
         delete '/', action: :destroy, on: :collection
       end
-      resources :rooms, only: %i[create show index] do
+      resources :rooms, only: %i[create show index destroy] do
         resources :tasks, only: %i[index create update show]
       end
     end
