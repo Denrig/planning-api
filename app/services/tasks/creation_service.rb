@@ -12,5 +12,10 @@ class Tasks::CreationService < BaseService
     end
 
     return unless @task
+
+    room.broadcast({
+                     type: :TASK_ADDED,
+                     task: TaskSerializer.new(task).serializable_hash
+                   })
   end
 end
