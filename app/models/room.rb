@@ -25,7 +25,7 @@ class Room < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   validates :name, presence: true
-  validates :jira_key, uniqueness: true
+  validates :jira_key, uniqueness: true, allow_blank: true
 
   scope :active, -> { where(active: true) }
 
