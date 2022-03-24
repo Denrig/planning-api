@@ -29,6 +29,13 @@ class Api::V1::TasksController < Api::V1::BaseController
     render json: task
   end
 
+  def destroy
+    room.tasks.destroy_all
+    room.broadcast({ type: :TASKS_CLEARED })
+
+    head :ok
+  end
+
   private
 
     def task_params

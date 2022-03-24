@@ -12,7 +12,9 @@ Rails.application.routes.draw do
         delete '/', action: :destroy, on: :collection
       end
       resources :rooms, only: %i[create show index destroy] do
-        resources :tasks, only: %i[index create update show]
+        resources :tasks, only: %i[index create update show] do
+          delete '/', action: :destroy, on: :collection
+        end
       end
     end
   end
