@@ -23,7 +23,7 @@ class Task < ApplicationRecord
   has_many :votes, dependent: :destroy
 
   validates :text, presence: true
-  validates :jira_id, uniqueness: true
+  validates :jira_id, uniqueness: true, allow_blank: true
 
   enum issue_type: {
     bug: 1,

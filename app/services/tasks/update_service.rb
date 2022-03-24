@@ -16,8 +16,8 @@ class Tasks::UpdateService < BaseService
       task.save!
     end
 
-    broadcast_task_updated(task)
     broadcast_task_updated(current_voting_task) if @is_current_changed
+    broadcast_task_updated(task)
     update_jira_card if @is_result_changed
   end
 
